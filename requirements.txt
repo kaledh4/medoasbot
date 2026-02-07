@@ -11,4 +11,5 @@ arabic-reshaper
 python-bidi
 firebase-admin
 openai
-importlib-metadata>=6.0.0
+importlib-metadata>=6.0.0python-telegram-bot
+python-dotenv

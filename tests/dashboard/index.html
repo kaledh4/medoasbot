@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propaganda Pipeline Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card.status-good {
+            border-left: 4px solid #10b981;
+        }
+
+        .card.status-warning {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .card.status-error {
+            border-left: 4px solid #ef4444;
+        }
+
+        .card h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .activity-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item.success {
+            color: #10b981;
+        }
+
+        .activity-item.error {
+            color: #ef4444;
+        }
+
+        .activity-item.warning {
+            color: #f59e0b;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        .refresh-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .refresh-button:hover {
+            background: #f3f4f6;
+        }
+
+        .refresh-button.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Propaganda Pipeline Dashboard</h1>
+            <p>Real-time monitoring of your pipeline workflow</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card status-good">
+                <h3>📊 Overall Status</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-jobs">0</div>
+                        <div class="stat-label">Total Jobs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="success-jobs">0</div>
+                        <div class="stat-label">Successful</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="failed-jobs">0</div>
+                        <div class="stat-label">Failed</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card status-warning">
+                <h3>🔄 Recent Activity</h3>
+                <div class="activity-list" id="activity-list">
+                    <div class="activity-item">
+                        <span>Loading recent activity...</span>
+                        <span class="activity-time">Just now</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card status-error">
+                <h3>⏰ Last Update</h3>
+                <div style="text-align: center; padding: 20px; font-size: 1.2rem;">
+                    <div id="last-update">Never</div>
+                    <div style="margin-top: 15px; font-size: 0.9rem; color: #9ca3af;">
+                        <span id="update-status">System initializing...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="refresh-button" onclick="refreshDashboard()">
+            🔄 Refresh Dashboard
+        </button>
+
+        <div class="last-updated">
+            Dashboard automatically updates every 30 seconds
+        </div>
+    </div>
+
+    <script>
+        let refreshInterval;
+
+        function fetchDashboardData() {
+            return fetch('/tests/dashboard/dashboard_data.json')
+                .then(response => response.json())
+                .catch(error => {
+                    console.error('Error fetching dashboard data:', error);
+                    return null;
+                });
+        }
+
+        function updateDashboardUI(data) {
+            if (!data) return;
+
+            // Update stats
+            document.getElementById('total-jobs').textContent = data.stats.total_jobs || 0;
+            document.getElementById('success-jobs').textContent = data.stats.successful_jobs || 0;
+            document.getElementById('failed-jobs').textContent = data.stats.failed_jobs || 0;
+
+            // Update last update
+            if (data.last_updated) {
+                const lastUpdate = new Date(data.last_updated);
+                document.getElementById('last-update').textContent = 
+                    lastUpdate.toLocaleString();
+                document.getElementById('update-status').textContent = 
+                    'Last updated successfully';
+                document.getElementById('update-status').className = 'activity-item success';
+            }
+
+            // Update activity list
+            const activityList = document.getElementById('activity-list');
+            activityList.innerHTML = '';
+
+            if (data.recent_activity && data.recent_activity.length > 0) {
+                data.recent_activity.slice(-5).reverse().forEach(activity => {
+                    const item = document.createElement('div');
+                    item.className = `activity-item ${activity.status.toLowerCase()}`;
+                    
+                    const statusText = activity.status === 'Success' ? '✅' : 
+                                      activity.status === 'Failed' ? '❌' : 
+                                      '⚠️';
+                    
+                    item.innerHTML = `
+                        <span>${statusText} ${activity.job_name}</span>
+                        <span class="activity-time">${new Date(activity.timestamp).toLocaleTimeString()}</span>
+                    `;
+                    
+                    activityList.appendChild(item);
+                });
+            } else {
+                activityList.innerHTML = `
+                    <div class="activity-item">
+                        <span>No recent activity</span>
+                        <span class="activity-time">System idle</span>
+                    </div>
+                `;
+            }
+        }
+
+        function refreshDashboard() {
+            const button = document.querySelector('.refresh-button');
+            button.textContent = '⏳ Refreshing...';
+            button.classList.add('loading');
+
+            fetchDashboardData().then(data => {
+                updateDashboardUI(data);
+                button.textContent = '🔄 Refresh Dashboard';
+                button.classList.remove('loading');
+            });
+        }
+
+        function startAutoRefresh() {
+            refreshDashboard();
+            refreshInterval = setInterval(refreshDashboard, 30000); // Refresh every 30 seconds
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', startAutoRefresh);
+
+        // Clean up interval on page unload
+        window.addEventListener('beforeunload', () => {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        });
+    </script>
+</body>
+</html>

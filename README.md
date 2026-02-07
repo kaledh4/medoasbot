@@ -1,122 +1,103 @@
-# Propaganda Pipeline Dashboard
+# MedoasBot - Propaganda Analysis Pipeline
 
-A multi-source data collection and analysis pipeline for monitoring propaganda and disinformation campaigns.
+Automated data collection and analysis pipeline for propaganda detection and distribution.
 
 ## Features
 
-- **Multi-Source Data Collection**: Gathers data from various social media platforms, news sources, and dark web forums
-- **Real-Time Analysis**: Processes and analyzes incoming data streams for propaganda patterns
-- **Automated Reporting**: Generates daily reports with findings and insights
-- **Dashboard Integration**: Live dashboard displaying current campaigns and trends
-- **Cron Job Integration**: Automated updates from scheduled tasks
+- **Multi-source data aggregation** - Collects from various propaganda sources
+- **Telegram bot interface** - Real-time updates via @medoasbot
+- **Automated content analysis** - AI-powered propaganda detection
+- **Real-time monitoring** - Live dashboard and notifications
+- **Pipeline orchestration** - Coordinated data processing workflow
 
 ## Quick Start
 
-### Prerequisites
-
-- Python 3.11+
-- pip
-- Git
-
-### Installation
+### 1. Clone the repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/kaledh4/medoasbot.git
 cd medoasbot
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the pipeline
-python main.py
 ```
 
-### Configuration
+### 2. Set up virtual environment
 
-Copy the example environment file and configure your settings:
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure environment
 
 ```bash
 cp .env.example .env
-# Edit .env with your API keys and settings
+# Edit .env with your credentials
 ```
 
-## Dashboard
+### 5. Run the bot
 
-The dashboard is available at: https://kaledh4.github.io/medoasbot/
+```bash
+python bot.py
+```
 
-### Features
+## Environment Variables
 
-- **Live Data Visualization**: Real-time charts and graphs
-- **Campaign Tracking**: Monitor active propaganda campaigns
-- **Daily Reports**: Automated daily summaries
-- **Alert System**: Notifications for significant findings
-- **Historical Data**: Access to past campaign data
+Create a `.env` file with:
 
-## Cron Jobs
+```
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+```
 
-### Scheduled Tasks
+## Project Structure
 
-The pipeline includes automated cron jobs for:
+```
+.
+├── bot.py              # Telegram bot entry point
+├── main.py             # Pipeline orchestrator
+├── src/
+│   └── pipeline/       # Data pipeline modules
+├── tests/              # Test files and cron jobs
+├── requirements.txt    # Python dependencies
+├── .env               # Configuration (not committed)
+├── .gitignore         # Git ignore rules
+└── README.md          # This file
+```
 
-- **Data Collection**: Scheduled data gathering from sources
-- **Analysis**: Regular analysis of collected data
-- **Report Generation**: Automated daily report creation
-- **Dashboard Updates**: Real-time dashboard refreshes
+## Telegram Bot
 
-### Adding New Cron Jobs
+Access the bot at: https://t.me/medoasbot
 
-1. Add your job to `scripts/` directory
-2. Configure in `crontab` or `cron.yaml`
-3. Dashboard will automatically display results
+### Available Commands
 
-## API Endpoints
+- `/start` - Initialize bot and get started
+- `/help` - Show help message
+- `/status` - Check pipeline status
+- `/stats` - View analytics and metrics
+- `/report` - Generate analysis report
 
-### Data Collection
-- `GET /api/v1/data/collect` - Trigger data collection
-- `GET /api/v1/data/status` - Check collection status
+## Security
 
-### Analysis
-- `GET /api/v1/analysis/start` - Start analysis
-- `GET /api/v1/analysis/status` - Check analysis status
+⚠️ **Never commit `.env` files or API tokens to version control.**
 
-### Reports
-- `GET /api/v1/reports/daily` - Get daily report
-- `GET /api/v1/reports/weekly` - Get weekly report
+The `.gitignore` file protects your sensitive credentials from being pushed to GitHub.
 
 ## Development
 
-### Project Structure
+### Running the pipeline
 
-```
-medoasbot/
-├── main.py              # Main entry point
-├── services/            # Backend services
-│   ├── ai_agent.py     # AI analysis service
-│   ├── aggregation.py  # Data aggregation
-│   ├── deepseek.py     # DeepSeek integration
-│   ├── gemini.py       # Google Gemini integration
-│   ├── ranking.py      # Content ranking
-│   └── store.py        # Data storage
-├── scripts/            # Utility scripts
-├── static/             # Static assets
-├── data/               # Data files
-├── tests/              # Test files
-└── docs/               # Documentation
+```bash
+python main.py
 ```
 
 ### Testing
 
 ```bash
-# Run all tests
-python -m pytest
-
-# Run specific test
-python -m pytest tests/test_security.py
+python -m pytest tests/
 ```
 
 ## Contributing
@@ -124,20 +105,19 @@ python -m pytest tests/test_security.py
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests for new functionality
+4. Add tests if applicable
 5. Submit a pull request
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Support
 
-For support and questions:
+For issues and questions:
 - Create an issue on GitHub
-- Check the [documentation](docs/)
-- Join our Discord community
+- Contact the development team
 
 ---
 
-**Built with ❤️ for monitoring and analyzing propaganda campaigns**
+**Built with ❤️ for propaganda analysis and detection**

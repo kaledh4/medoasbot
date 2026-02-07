@@ -1,1 +1,27 @@
+# Environment variables
+.env
+*.env
+
+# Virtual environment
 venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# API keys and credentials
+credentials.json
+*.key
+*.pem
+
+# Results and logs
+results_*.json
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

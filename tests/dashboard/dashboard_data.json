@@ -1,0 +1,26 @@
+{
+  "dashboard": {
+    "title": "Propaganda Pipeline Dashboard",
+    "last_updated": "2026-02-07T09:42:25.272230",
+    "status": "Active",
+    "stats": {
+      "total_jobs": 2,
+      "successful_jobs": 2,
+      "failed_jobs": 0
+    },
+    "recent_activity": [
+      {
+        "timestamp": "2026-02-07T09:41:43.346894",
+        "job_name": "test_dashboard_update",
+        "status": "Success",
+        "message": "Dashboard update test completed successfully"
+      },
+      {
+        "timestamp": "2026-02-07T09:42:25.272249",
+        "job_name": "test_dashboard_update",
+        "status": "Success",
+        "message": "Dashboard update test completed successfully"
+      }
+    ]
+  }
+}

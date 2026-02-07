@@ -1,0 +1,12 @@
+# Telegram Bot & Dashboard Test Cron Job
+# This cron job runs every 2 minutes to test the workflow
+
+*/2 * * * * /root/.openclaw/workspace/propaganda-pipeline/tests/cron_test.sh > /root/.openclaw/workspace/propaganda-pipeline/tests/cron_test.log 2&&1
+
+# Every hour (for additional testing)
+0 * * * * /root/.openclaw/workspace/propaganda-pipeline/tests/cron_test.sh > /root/.openclaw/workspace/propaganda-pipeline/tests/cron_test_hourly.log 2&&1
+
+# Every day at midnight
+0 0 * * * /root/.openclaw/workspace/propaganda-pipeline/tests/cron_test.sh > /root/.openclaw/workspace/propaganda-pipeline/tests/cron_test_daily.log 2&&1
+
+# Empty line at the end
