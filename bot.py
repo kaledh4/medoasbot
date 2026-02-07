@@ -5,7 +5,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 
 load_dotenv()
 
-def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /start command"""
     message = """🤖 Welcome to MedoasBot! 
 
@@ -19,7 +19,7 @@ def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 """
     await update.message.reply_text(message)
 
-def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /help command"""
     message = """📖 Available Commands:
 
@@ -33,7 +33,7 @@ def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 """
     await update.message.reply_text(message)
 
-def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /status command"""
     message = """📊 Pipeline Status: ✅ Operational
 
@@ -69,5 +69,5 @@ def main():
     # Start the Bot
     application.run_polling()
 
-if __name__ == '__main__':
+if __name__ == '__main':
     main()
