@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            /* Ensure the screenshot captures exactly the component size */
+            width: 500px;
+            height: 650px;
+        }
+
+        /* 
+           Card Container - Deep Green Gradient
+           This is the "Canvas" for our Python text drawing.
+           We keep static elements (Background, Circles, Brand Pill, Border shadows).
+           We REMOVE dynamic text placeholders so Python can draw them cleanly.
+        */
+        .card-wrapper {
+            width: 500px;
+            height: 650px;
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            /* Removed box-shadow for template generation to avoid clipping artifacts in screenshot */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .glow-circle {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.2) 0%, rgba(6, 78, 59, 0) 70%);
+            border-radius: 50%;
+            top: -100px;
+            left: -100px;
+            z-index: 1;
+        }
+
+        .glow-circle-2 {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0) 70%);
+            border-radius: 50%;
+            bottom: -50px;
+            right: -50px;
+            z-index: 1;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            padding: 40px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .brand-pill {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            color: #fff;
+            font-family: sans-serif;
+            /* Fallback for template */
+            font-weight: 700;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .main-title-container {
+            margin-bottom: 25px;
+        }
+
+        .intro-text {
+            color: #fff;
+            font-family: sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* White Card Area - Empty for Python to fill */
+        .offer-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 25px;
+            /* box-shadow: 0 15px 35px rgba(0,0,0,0.2); rendered inside Python if needed or kept here */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            border-bottom: 6px solid #10b981;
+            min-height: 200px;
+            /* Reserve space */
+        }
+
+        /* Price Container - Empty for Python to Fill Values */
+        .price-container {
+            margin-top: auto;
+            background: rgba(16, 185, 129, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            height: 80px;
+            /* Fixed height */
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .price-label-placeholder {
+            font-family: sans-serif;
+            color: #022c22;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .floating-icon {
+            position: absolute;
+            right: 20px;
+            top: 100px;
+            font-size: 60px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+            color: white;
+            /* Explicit color */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card-wrapper">
+        <div class="glow-circle"></div>
+        <div class="glow-circle-2"></div>
+        <div class="floating-icon">✨</div>
+
+        <div class="content-layer">
+            <div class="header">
+                <div class="brand-pill">
+                    <span style="font-size:18px;">⚡</span> Eventak
+                </div>
+            </div>
+
+            <div class="main-title-container">
+                <div class="intro-text">عرض خاص لك من</div>
+                <!-- Vendor Name & Rating will be drawn by Python here -->
+            </div>
+
+            <div class="offer-card">
+                <!-- Offer Details drawn by Python here -->
+            </div>
+
+            <div class="price-container">
+                <div class="price-label-placeholder">إجمالي العرض</div>
+                <!-- Price Value drawn by Python here -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

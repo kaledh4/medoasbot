@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-dotenv
+google-generativeai>=0.8.0
+requests
+twilio
+python-multipart
+Pillow
+aiofiles
+arabic-reshaper
+python-bidi
+firebase-admin
+openai
+importlib-metadata>=6.0.0

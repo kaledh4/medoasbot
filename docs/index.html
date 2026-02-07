@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propaganda Pipeline Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-chart-line"></i> Propaganda Pipeline Dashboard</h1>
+                <div class="header-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="active-campaigns">0</div>
+                        <div class="stat-label">Active Campaigns</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-sources">0</div>
+                        <div class="stat-label">Data Sources</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="daily-findings">0</div>
+                        <div class="stat-label">Daily Findings</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="dashboard-section">
+                <h2><i class="fas fa-clock"></i> Real-Time Data</h2>
+                <div class="realtime-grid">
+                    <div class="realtime-card">
+                        <div class="card-header">
+                            <hi class="fas fa-stream"></i> Data Collection Status</div>
+                        <div class="card-content">
+                            <ul id="data-collection-status"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="realtime-card">
+                        <div class="card-header">
+                            <hi class="fas fa-brain"></i> AI Analysis</div>
+                        <div class="card-content">
+                            <ul id="ai-analysis-status"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="realtime-card">
+                        <div class="card-header">
+                            <hi class="fas fa-chart-bar"></i> Campaign Trends</div>
+                        <div class="card-content">
+                            <div id="trend-chart">Loading chart...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section">
+                <h2><i class="fas fa-newspaper"></i> Daily Reports</h2>
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <div class="report-header">
+                            <hi class="fas fa-calendar-day"></i> Today's Summary</div>
+                        <div class="report-content" id="daily-summary">Loading...</div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-header">
+                            <hi class="fas fa-exclamation-triangle"></i> Critical Findings</div>
+                        <div class="report-content" id="critical-findings">Loading...</div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-header">
+                            <hi class="fas fa-chart-pie"></i> Data Distribution</div>
+                        <div class="report-content" id="data-distribution">Loading...</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-section">
+                <h2><i class="fas fa-cogs"></i> Cron Jobs</h2>
+                <div class="cron-jobs-grid">
+                    <div class="cron-job-card">
+                        <div class="job-header">
+                            <span class="job-name">Data Collection</span>
+                            <span class="job-status" id="job-data-collection">Status: Pending</span>
+                        </div>
+                        <div class="job-details">
+                            <ul>
+                                <li><strong>Last Run:</strong> Never</li>
+                                <li><strong>Next Run:</strong> Scheduled</li>
+                                <li><strong>Success Rate:</strong> 0%</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="cron-job-card">
+                        <div class="job-header">
+                            <span class="job-name">AI Analysis</span>
+                            <span class="job-status" id="job-ai-analysis">Status: Pending</span>
+                        </div>
+                        <div class="job-details">
+                            <ul>
+                                <li><strong>Last Run:</strong> Never</li>
+                                <li><strong>Next Run:</strong> Scheduled</li>
+                                <li><strong>Success Rate:</strong> 0%</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="cron-job-card">
+                        <div class="job-header">
+                            <span class="job-name">Report Generation</span>
+                            <span class="job-status" id="job-report-gen">Status: Pending</span>
+                        </div>
+                        <div class="job-details">
+                            <ul>
+                                <li><strong>Last Run:</strong> Never</li>
+                                <li><strong>Next Run:</strong> Scheduled</li>
+                                <li><strong>Success Rate:</strong> 0%</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p><strong>Last Updated:</strong> <span id="last-updated">Just now</span></p>
+                <p><strong>Status:</strong> <span id="system-status" class="status-active">Active</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

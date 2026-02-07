@@ -1,0 +1,245 @@
+{
+    "version": "2.1",
+    "screens": [
+        {
+            "id": "SCREEN_OCCASION",
+            "title": "نوع المناسبة | Occasion",
+            "data": {},
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "TextHeading",
+                        "text": "مرحباً بك في إيفنتك! 👋"
+                    },
+                    {
+                        "type": "TextBody",
+                        "text": "عشان نخدمك بشكل أفضل، وش نوع مناسبتك؟"
+                    },
+                    {
+                        "type": "RadioButtonsGroup",
+                        "name": "occasion",
+                        "required": true,
+                        "data-source": [
+                            {
+                                "id": "occ_wedding",
+                                "title": "💍 زواج / ملكة (Wedding)"
+                            },
+                            {
+                                "id": "occ_engagement",
+                                "title": "💍 خطوبة (Engagement)"
+                            },
+                            {
+                                "id": "occ_graduation",
+                                "title": "🎓 تخرج (Graduation)"
+                            },
+                            {
+                                "id": "occ_birthday",
+                                "title": "🎂 ميلاد (Birthday)"
+                            },
+                            {
+                                "id": "occ_gathering",
+                                "title": "🏠 عزيمة / جمعة (Gathering)"
+                            },
+                            {
+                                "id": "occ_corporate",
+                                "title": "🏢 مناسبة شركة (Corporate)"
+                            },
+                            {
+                                "id": "occ_other",
+                                "title": "✨ أخرى (Other)"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Footer",
+                        "label": "التالي (Next)",
+                        "on-click-action": {
+                            "name": "navigate",
+                            "next": {
+                                "type": "screen",
+                                "name": "SCREEN_LOCATION"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "SCREEN_LOCATION",
+            "title": "الموقع | Location",
+            "data": {},
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "TextHeading",
+                        "text": "وين موقع المناسبة؟ 📍"
+                    },
+                    {
+                        "type": "Dropdown",
+                        "name": "city",
+                        "label": "المدينة (City)",
+                        "required": true,
+                        "data-source": [
+                            {
+                                "id": "Riyadh",
+                                "title": "الرياض (Riyadh)"
+                            },
+                            {
+                                "id": "Jeddah",
+                                "title": "جدة (Jeddah)"
+                            },
+                            {
+                                "id": "Dammam",
+                                "title": "الدمام (Dammam)"
+                            },
+                            {
+                                "id": "Khobar",
+                                "title": "الخبر (Khobar)"
+                            },
+                            {
+                                "id": "Mecca",
+                                "title": "مكة المكرمة (Mecca)"
+                            },
+                            {
+                                "id": "Medina",
+                                "title": "المدينة المنورة (Medina)"
+                            },
+                            {
+                                "id": "Other",
+                                "title": "مدينة أخرى (Other)"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TextInput",
+                        "name": "district",
+                        "label": "الحي (District)",
+                        "required": true,
+                        "input-type": "text",
+                        "helper-text": "اسم الحي أو المعلم القريب (مثال: حي الملقا)"
+                    },
+                    {
+                        "type": "Footer",
+                        "label": "التالي (Next)",
+                        "on-click-action": {
+                            "name": "navigate",
+                            "next": {
+                                "type": "screen",
+                                "name": "SCREEN_SERVICES"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "SCREEN_SERVICES",
+            "title": "الخدمات | Services",
+            "data": {},
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "TextHeading",
+                        "text": "وش الخدمات اللي تحتاجها؟ 🛠️"
+                    },
+                    {
+                        "type": "TextBody",
+                        "text": "تقدر تختار أكثر من خدمة"
+                    },
+                    {
+                        "type": "CheckboxGroup",
+                        "name": "services",
+                        "required": true,
+                        "data-source": [
+                            {
+                                "id": "srv_catering",
+                                "title": "🍽️ بوفيه / ولائم (Catering)"
+                            },
+                            {
+                                "id": "srv_coffee",
+                                "title": "☕ قهوجية وضيافة (Hospitality)"
+                            },
+                            {
+                                "id": "srv_chairs",
+                                "title": "🪑 طاولات وكراسي (Furniture)"
+                            },
+                            {
+                                "id": "srv_tents",
+                                "title": "⛺ خيام وزل (Tents)"
+                            },
+                            {
+                                "id": "srv_lights",
+                                "title": "💡 إضاءة وصوتيات (AV)"
+                            },
+                            {
+                                "id": "srv_flowers",
+                                "title": "🌸 تنسيق ورود (Decor)"
+                            },
+                            {
+                                "id": "srv_photography",
+                                "title": "📸 تصوير (Photography)"
+                            },
+                            {
+                                "id": "srv_workers",
+                                "title": "👷 عمالة / صبابين (Staff)"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Footer",
+                        "label": "التالي (Next)",
+                        "on-click-action": {
+                            "name": "navigate",
+                            "next": {
+                                "type": "screen",
+                                "name": "SCREEN_VISION"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "SCREEN_VISION",
+            "title": "رؤيتك | The Vision",
+            "data": {},
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "TextHeading",
+                        "text": "عندك تفاصيل إضافية؟ 🧠"
+                    },
+                    {
+                        "type": "TextBody",
+                        "text": "اوصف لنا جو المناسبة، الثيم، أو أي تفاصيل خاصة تساعدنا نفهم طلبك بشكل أفضل. (اختياري)"
+                    },
+                    {
+                        "type": "TextArea",
+                        "name": "vision",
+                        "label": "اوصف رؤيتك هنا... (Describe your vision)",
+                        "required": false,
+                        "max-length": 500
+                    },
+                    {
+                        "type": "Footer",
+                        "label": "إرسال الطلب (Submit Request) ✅",
+                        "on-click-action": {
+                            "name": "complete",
+                            "payload": {
+                                "occasion": "${form.occasion}",
+                                "city": "${form.city}",
+                                "district": "${form.district}",
+                                "services": "${form.services}",
+                                "vision": "${form.vision}"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
