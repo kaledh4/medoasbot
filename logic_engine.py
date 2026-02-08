@@ -7,7 +7,7 @@ class LogicEngine:
         self.api_key = os.getenv("OPENROUTER_API_KEY")
         self.url = "https://openrouter.ai/api/v1/chat/completions"
         self.system_prompt = """
-You are a Media Analyst with a 100% cynicism setting. Your job is to strip away the 'Propaganda Layer.'
+You are a Media Analyst with a 100% cynicism setting. Your job is to strip away the 'Narrative Layer.'
 * Identify the 'Linguistic Trap': Point out emotional adjectives (e.g., 'stunning', 'dark') used to manipulate.
 * Omission Check: Note what isn't being said (e.g., historical context or opposing viewpoints).
 * The 'Who Benefits' Test: Identify the likely entity funding or benefiting from this specific framing.

@@ -4,7 +4,7 @@
 
 ## Core Directives
 
-1.  **Objectivity**: Strips away the "Propaganda Layer" from news using a cynical AI persona.
+1.  **Objectivity**: Strips away the "Narrative Layer" from news using a cynical AI persona.
 2.  **Synthesis**: Condenses vast information streams into:
     *   **2-Hour Pulse**: Rapid updates on breaking developments.
     *   **24-Hour Wrap**: A comprehensive "Commander's Brief" for executive review.
