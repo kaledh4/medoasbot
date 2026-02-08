@@ -35,6 +35,10 @@
     ],
     "reddit": [
         {
+            "subreddit": "accelerate",
+            "limit": 15
+        },
+        {
             "subreddit": "singularity",
             "limit": 10
         },
@@ -53,6 +57,28 @@
         {
             "subreddit": "saudiarabia",
             "limit": 5
+        }
+    ],
+    "x_accounts": [
+        {
+            "name": "InvestWithGPT",
+            "handle": "InvestWithGPT",
+            "priority": "high"
+        },
+        {
+            "name": "ElonMusk",
+            "handle": "elonmusk",
+            "priority": "high"
+        },
+        {
+            "name": "SamAltman",
+            "handle": "sama",
+            "priority": "high"
+        },
+        {
+            "name": "MichaelSaylor",
+            "handle": "saylor",
+            "priority": "medium"
         }
     ],
     "x_nitter": [

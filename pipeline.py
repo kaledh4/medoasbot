@@ -5,6 +5,7 @@ import logging
 from datetime import datetime
 from dotenv import load_dotenv
 from feeder import Feeder
+from social_feeder import SocialFeeder
 from logic_engine import LogicEngine
 from database import Database
 from telegram_util import send_telegram_message
@@ -22,12 +23,21 @@ logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s -
 def run_2hour_pulse():
     logging.info("Starting 2-hour pulse...")
     feeder = Feeder()
+    social_feeder = SocialFeeder()
     engine = LogicEngine()
     db = Database()
     
-    # 1. Fetch new articles
+    # 1. Fetch new articles from RSS feeds
     articles = feeder.fetch_all()
-    logging.info(f"Fetched {len(articles)} new articles.")
+    logging.info(f"Fetched {len(articles)} articles from RSS feeds.")
+    
+    # 2. Fetch from social media (Reddit, X/Twitter)
+    social_articles = social_feeder.fetch_all()
+    logging.info(f"Fetched {len(social_articles)} articles from social media.")
+    
+    # Combine all sources
+    articles.extend(social_articles)
+    logging.info(f"Total articles to process: {len(articles)}")
     
     new_toon_phrases = []
     
