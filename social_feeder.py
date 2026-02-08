@@ -123,6 +123,12 @@ class SocialFeeder:
             "nitter.net",
             "nitter.privacydev.net",
             "nitter.poast.org",
+            "nitter.unixfox.eu",
+            "nitter.projectsegfau.lt",
+            "nitter.it",
+            "nitter.moomoo.me",
+            "nitter.rawbit.ninja",
+            "nitter.ca",
         ]
         
         for account in sources.get("x_accounts", []):

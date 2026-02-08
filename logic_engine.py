@@ -72,6 +72,9 @@ Output Format (Bullet points):
 * [IMPLICATION]: The immediate result.
 * [SIGNAL]: The deep market/strategic key.
 """
+        messages = [
+            {"role": "system", "content": system_prompt}
+        ]
 
         if previous_context:
             context_str = "\n".join(previous_context)

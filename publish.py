@@ -25,6 +25,13 @@ def generate_html():
     cursor.execute("SELECT date, wrap_text FROM daily_wraps ORDER BY date DESC LIMIT 1")
     daily_wrap = cursor.fetchone()
     
+    # Get mentions for the report date
+    mentions = []
+    if daily_wrap:
+        report_date = daily_wrap[0]
+        cursor.execute("SELECT source, analysis_toon_phrase, url, timestamp FROM mentions WHERE date(timestamp) = ? ORDER BY timestamp DESC", (report_date,))
+        mentions = cursor.fetchall()
+    
     conn.close()
 
     # Convert Markdown to HTML if wrap exists
@@ -65,6 +72,27 @@ def generate_html():
             # Post-process Arabic
             brief_html_ar = re.sub(source_pattern, r'<a href="\1" target="_blank" class="source-link">RESEARCH SOURCE</a>', brief_html_ar)
             brief_html_ar = re.sub(r'(<table>.*?</table>)', r'<div class="table-wrapper">\1</div>', brief_html_ar, flags=re.DOTALL)
+
+        # 4. Generate Intelligence Stream HTML
+        stream_html = ""
+        for source, analysis, url, ts in mentions:
+            # Highlight FACT/IMPLICATION/SIGNAL
+            analysis_fmt = analysis.replace("[FACT]:", '<span class="intel-label fact">[FACT]:</span>')
+            analysis_fmt = analysis_fmt.replace("[IMPLICATION]:", '<span class="intel-label impl">[IMPLICATION]:</span>')
+            analysis_fmt = analysis_fmt.replace("[SIGNAL]:", '<span class="intel-label signal">[SIGNAL]:</span>')
+            
+            source_link = f' <a href="{url}" target="_blank" class="source-link">ORIGIN</a>' if url else ""
+            
+            stream_html += f"""
+            <div class="intel-pulse">
+                <div class="intel-meta">{ts} // SOURCE: {source}{source_link}</div>
+                <div class="intel-body">{analysis_fmt}</div>
+            </div>
+            """
+        
+        # If no wrap but mentions exist, handle that (though wrap is priority)
+        if not mentions:
+            stream_html = '<div class="empty-state">No pulses captured for this reporting period.</div>'
 
     html_template = f"""
 <!DOCTYPE html>
@@ -367,6 +395,43 @@ def generate_html():
             background: rgba(255, 255, 255, 0.03);
         }}
 
+        /* Intelligence Stream Styling */
+        .intel-pulse {{
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-left: 2px solid var(--accent);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }}
+
+        .intel-meta {{
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }}
+
+        .intel-body {{
+            line-height: 1.6;
+        }}
+
+        .intel-label {{
+            font-weight: 700;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 1px 4px;
+            border-radius: 4px;
+            margin-right: 5px;
+        }}
+
+        .fact {{ background: rgba(0, 242, 255, 0.1); color: var(--accent); }}
+        .impl {{ background: rgba(255, 255, 255, 0.05); color: #fff; }}
+        .signal {{ background: rgba(255, 75, 75, 0.1); color: #ff4b4b; }}
+
         /* Mobile Responsive Adjustments */
         @media (max-width: 768px) {{
             .container {{
@@ -584,10 +649,20 @@ def generate_html():
         <main>
             <div class="brief-content active" id="brief-en">
                 {brief_html_en if brief_html_en else '<div class="empty-state">No executive intelligence generated for today yet. Waiting for end-of-day synthesis...</div>'}
+                
+                <h2 style="margin-top: 60px;">Tactical Intelligence Stream</h2>
+                <div class="intel-stream">
+                    {stream_html}
+                </div>
             </div>
             
             <div class="brief-content ar-font" id="brief-ar">
                 {brief_html_ar if brief_html_ar else '<div class="empty-state">جارٍ إعداد الترجمة... (Translation pending)</div>'}
+                
+                <h2 style="margin-top: 60px;">موجز الاستخبارات التكتيكية</h2>
+                <div class="intel-stream">
+                    {stream_html}
+                </div>
             </div>
             
             <script>
