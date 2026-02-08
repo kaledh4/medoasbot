@@ -1,0 +1,88 @@
+{
+    "rss": [
+        {
+            "name": "TechCrunch AI",
+            "url": "https://techcrunch.com/category/artificial-intelligence/feed/"
+        },
+        {
+            "name": "MIT Technology Review AI",
+            "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed/"
+        },
+        {
+            "name": "Battery News",
+            "url": "https://battery-news.de/en/feed/"
+        },
+        {
+            "name": "CNBC Finance",
+            "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html"
+        },
+        {
+            "name": "TASI News (Argaam)",
+            "url": "https://www.argaam.com/en/rss/listsectionrss/sectionid/132"
+        },
+        {
+            "name": "CoinDesk",
+            "url": "https://www.coindesk.com/arc/outboundfeeds/rss/"
+        },
+        {
+            "name": "Saudi Gazette Business",
+            "url": "https://saudigazette.com.sa/business/rss"
+        },
+        {
+            "name": "Bloomberg Markets",
+            "url": "https://www.bloomberg.com/feeds/sitemap/news.xml"
+        }
+    ],
+    "reddit": [
+        {
+            "subreddit": "singularity",
+            "limit": 10
+        },
+        {
+            "subreddit": "cryptocurrency",
+            "limit": 10
+        },
+        {
+            "subreddit": "stocks",
+            "limit": 10
+        },
+        {
+            "subreddit": "energy",
+            "limit": 5
+        },
+        {
+            "subreddit": "saudiarabia",
+            "limit": 5
+        }
+    ],
+    "x_nitter": [
+        {
+            "name": "ElonMusk",
+            "url": "https://nitter.net/elonmusk/rss"
+        },
+        {
+            "name": "CathieWood",
+            "url": "https://nitter.net/CathieDWood/rss"
+        },
+        {
+            "name": "SamAltman",
+            "url": "https://nitter.net/sama/rss"
+        },
+        {
+            "name": "MichaelSaylor",
+            "url": "https://nitter.net/saylor/rss"
+        },
+        {
+            "name": "VitalikButerin",
+            "url": "https://nitter.net/VitalikButerin/rss"
+        },
+        {
+            "name": "JensenHuang (NVIDIA)",
+            "url": "https://nitter.net/jensenhuang/rss"
+        },
+        {
+            "name": "RayDalio",
+            "url": "https://nitter.net/RayDalio/rss"
+        }
+    ]
+}

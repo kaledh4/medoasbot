@@ -1,0 +1,6 @@
+feedparser
+requests
+sqlite3
+streamlit
+pandas
+praw
