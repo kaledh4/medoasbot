@@ -300,10 +300,18 @@
         }
 
         /* Mobile Responsive Adjustments */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 16px;
+            }
+            
             header {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
             }
             
             .lang-toggle {
@@ -312,20 +320,41 @@
                 width: 100%;
                 text-align: center;
             }
+            
+            .brief-content {
+                padding: 20px 16px;
+            }
+            
+            .brief-content h3 {
+                font-size: 1rem;
+            }
+            
+            .brief-content p {
+                font-size: 0.9rem;
+                word-wrap: break-word;
+            }
 
-            /* Mobile Table Cards */
+            /* Mobile Table Cards - Complete Overhaul */
             .table-wrapper {
                 border: none;
                 background: transparent;
+                overflow: visible;
+                margin: 15px 0;
             }
 
+            .brief-content table {
+                min-width: auto;
+                width: 100%;
+            }
+            
             .brief-content table, 
             .brief-content thead, 
             .brief-content tbody, 
             .brief-content th, 
             .brief-content td, 
             .brief-content tr { 
-                display: block; 
+                display: block;
+                width: 100%;
             }
             
             .brief-content thead tr { 
@@ -334,38 +363,92 @@
                 left: -9999px;
             }
             
-            .brief-content tr { 
+            .brief-content tbody tr { 
                 border: 1px solid var(--border);
-                margin-bottom: 20px;
+                margin-bottom: 16px;
                 border-radius: 12px;
-                background: var(--card-bg);
-                padding: 15px;
+                background: rgba(255, 255, 255, 0.03);
+                padding: 16px;
+                display: block;
             }
             
             .brief-content td { 
                 border: none;
                 position: relative;
-                padding-left: 0;
-                padding-bottom: 8px;
+                padding: 6px 0;
+                padding-left: 0 !important;
+                text-align: left !important;
+                display: block;
+                width: 100%;
+                white-space: normal;
+                word-wrap: break-word;
+                max-width: 100%;
+                min-width: auto;
             }
             
+            /* Asset Class Name - First Column */
             .brief-content td:nth-of-type(1) {
-                font-weight: 800;
+                font-weight: 700;
                 color: var(--accent);
-                font-size: 1.1rem;
+                font-size: 1rem;
                 border-bottom: 1px solid var(--border);
-                margin-bottom: 8px;
-                padding-bottom: 8px;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
             }
             
-            /* English Labels */
-            .brief-content td:nth-of-type(2)::before { content: "Allocation: "; color: var(--text-dim); font-size: 0.8rem; }
-            .brief-content td:nth-of-type(3)::before { content: "Stance: "; color: var(--text-dim); font-size: 0.8rem; }
-            .brief-content td:nth-of-type(4) { color: var(--text-dim); font-style: italic; margin-top: 5px; }
+            /* Allocation - Second Column */
+            .brief-content td:nth-of-type(2)::before { 
+                content: "Allocation: "; 
+                color: var(--text-dim); 
+                font-size: 0.75rem;
+                font-weight: 400;
+                display: inline;
+            }
+            .brief-content td:nth-of-type(2) {
+                font-weight: 600;
+                color: #fff;
+            }
+            
+            /* Stance - Third Column */
+            .brief-content td:nth-of-type(3)::before { 
+                content: "Stance: "; 
+                color: var(--text-dim); 
+                font-size: 0.75rem;
+                font-weight: 400;
+                display: inline;
+            }
+            .brief-content td:nth-of-type(3) {
+                color: #fff;
+            }
+            
+            /* Rationale - Fourth Column */
+            .brief-content td:nth-of-type(4) { 
+                color: var(--text-dim); 
+                font-style: italic; 
+                margin-top: 8px;
+                padding-top: 8px;
+                border-top: 1px dashed var(--border);
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+            .brief-content td:nth-of-type(4)::before {
+                content: "Rationale: ";
+                color: var(--text-dim);
+                font-size: 0.75rem;
+                font-weight: 400;
+                font-style: normal;
+                display: block;
+                margin-bottom: 4px;
+            }
             
             /* Arabic Labels (RTL) */
             .rtl .brief-content td:nth-of-type(2)::before { content: "التوزيع: "; }
             .rtl .brief-content td:nth-of-type(3)::before { content: "الموقف: "; }
+            .rtl .brief-content td:nth-of-type(4)::before { content: "الأساس المنطقي: "; }
+            
+            .rtl .brief-content td {
+                text-align: right !important;
+            }
         }
 
         footer {
@@ -515,60 +598,86 @@ Sector rotations are stalling as OEMs (specifically Automotive) sit on the sidel
             </div>
             
             <div class="brief-content ar-font" id="brief-ar">
-                <pre><code class="language-markdown">### 1. الموجز التنفيذي
-**حالة السوق:** تتسم البيئة بتحول عالي الإنتروبيا، يتميز بتراكم تقني مكثف في الأصول الرقمية ومخاطر فريدة غير مسبوقة في الأسهم الأمريكية (ترامب/ماسك). عدم وجود بيانات إقليمية (تاسي) يستلزم إقامة محيط دفاعي.
-**موقف المخاطر:** **دفاعي / حذر استراتيجي**
-**المحرك الكلي الرئيسي:** **التدخل الجيوسياسي ودورة استبدال التكنولوجيا الصناعية (أيونات الصوديوم)**
-
----
-
-### 2. توجيهات المحفظة الاستثمارية (V6)
-| فئة الأصول | التخصيص | الموقف | الأساس المنطقي |
-| :--- | :--- | :--- | :--- |
-| **النقد/السيولة** | **35%** | **احتياطي كبير** | حالة عدم يقين قصوى في تناوب القطاعات ومخاطر الأسهم &quot;غير المسبوقة&quot; (دخول ترامب إلى السوق). |
-| **الأصول المشفرة** | **20%** | **تجميع BTC** | أنماط التجميع واسعة النطاق مستمرة على الرغم من &quot;التدهور المشفر&quot; وإفصاحات هوسكينسون. |
-| **الأسهم الدفاعية** | **20%** | **تقليم القطاعات** | تجنب الشركات التي تعتمد على الإعلانات بشكل كبير (السيارات) والمتخلفة (الخطوط الجوية الأمريكية)؛ والتحوط من تقلبات ترامب/ماسك. |
-| **تخزين الطاقة** | **15%** | **زيادة الوزن الاستثماري لأيونات الصوديوم** | استعداد CATL للإنتاج وتثبيت التصنيع في ألمانيا يشيران إلى محور منحنى التكلفة. |
-| **الذكاء الاصطناعي الريادي** | **10%** | **تعرض تكتيكي** | وتيرة الاختراق (Claude/Opus) عالية؛ مخاطر الحوكمة/الدعاية تحد من الدخول الأكبر. |
-
----
-
-### 3. أفضل تخصيص قطاعي للعائد إلى المخاطر
-1.  **تخزين الطاقة (أيونات الصوديوم) [30%]**: ريادة CATL + هيمنة التصنيع الألمانية + مكاسب كفاءة الأنود.
-2.  **البنية التحتية للذكاء الاصطناعي [25%]**: الذكاء الاصطناعي المؤسسي (Mistral/Cisco) وأنظمة الأمن الذكي.
-3.  **الذهب الرقمي (BTC) [20%]**: التراكم التقني خلال أحداث الاستسلام.
-4.  **التكنولوجيا الصحية (ثانوية) [15%]**: مراقبة Hims &amp; Hers مقابل النتيجة القانونية لـ Novo Nordisk للدخول البديل.
-5.  **تاسي للخدمات المالية [10%]**: تثبيت الموقف حتى تتم استعادة بيانات المراقبة الإقليمية.
-
----
-
-### 4. حكم &quot;الموقف السابق&quot;
-**الحالة:** **التقييم الأولي**
-**ملاحظات:** أول نشر لتنسيق &quot;القائد&quot;. هذا أسس خط الأساس لـ 2026-02-07. ستقيس الموجزات المستقبلية الفرق مقابل هذه اللقطة.
-
----
-
-### 5. حلقة الاشتراطات التنفيذية (إذا/ثم)
-*   **إذا** كان BTC.D &lt; 55% **ثم** قم بالتدوير بقوة من التعرض للعملات البديلة إلى BTC الأساسي.
-*   **إذا** تجاوزت المراكز المالية لترامب B في الأصول المدارة المعلنة **ثم** قم بزيادة التحوط الدفاعي/تحديد المواقع في مؤشر التقلب VIX.
-*   **إذا** أكدت مواصفات أيونات الصوديوم CATL نقطة سعر &lt; 70 دولارًا أمريكيًا/كيلووات في الساعة **ثم** قم بزيادة الوزن الاستثماري لقطاع تخزين الطاقة بنسبة 10%.
-*   **إذا** كانت هامش ربح الخطوط الجوية الأمريكية متخلفة &gt; 500 نقطة أساس مقابل متوسط ​​الصناعة **ثم** اخرج من قطاع النقل بالكامل.
-*   **إذا** كان VIX &gt;= 20 **ثم** حافظ على مركز نقدي بنسبة 35%+؛ لا تنشر الاحتياطيات في عمليات التراجع.
-
----
-
-### 6. تحليل الذكاء الاصطناعي
-**نظام السوق وتحديد المواقع التكتيكي**
-تهيمن **ديناميكيات القوة الخاصة** على نظام السوق الحالي. إن دخول الشخصيات السياسية (ترامب) في شراء الأسهم المباشر وإمكانية حدوث اندماج بقيادة ماسك بقيمة 0.25 تريليون دولار يخلق تقلبات &quot;لاعب السلطة&quot; التي لا يمكن لمؤشرات الاقتصاد الكلي التقليدية أن تفسرها. إن &quot;اليقين&quot; في سوق الأسهم يتآكل، مما يجبر السيولة الذكية على التحول نحو الاختراقات التقنية الصعبة (بطاريات أيونات الصوديوم) والتراكم اللامركزي (بيتكوين).
-
-**تداعيات عبر الأصول**
-تتوقف تناوبات القطاعات مع بقاء مصنعي المعدات الأصلية (خاصة صناعة السيارات) على الهامش بسبب حالة عدم اليقين الإعلانية. هذا يخلق فراغًا تملؤه &quot;تكنولوجيا الحدود&quot; (الذكاء الاصطناعي/البطاريات). تهاجر رؤوس الأموال نحو الكيانات القادرة على إظهار الابتكار الجاهز للإنتاج، وتحديدًا نشر CATL لمركبات أيونات الصوديوم الكهربائية والذكاء الاصطناعي من الدرجة المؤسسية من Mistral.
-
-**المخاطر الرئيسية التي يجب مراقبتها**
-*   **تسلل الدعاية:** يتم بشكل متزايد الإبلاغ عن أنظمة الذكاء الاصطناعي بسبب &quot;تدهور الحقيقة&quot; واستخدام الدعاية، مما يهدد سلامة الأنظمة الذكية.
-*   **نقطة عمياء لتاسي:** يؤدي نقص بيانات السوق السعودية إلى خلق فجوة في المخاطر الإقليمية يجب ملؤها لتحقيق الاستقرار في تقييمات قطاع الطاقة.
-*   **التجزئة القانونية:** تعتبر المعركة القانونية بين Hims &amp; Hers و Novo Nordisk بمثابة جرس إنذار لخطر الإزاحة العامة في السوق.
-</code></pre>
+                <h3>1. الموجز التنفيذي</h3>
+<p><strong>وضع السوق:</strong> تتسم البيئة بحالة انتقالية عالية الاعتلاج، تتميز بتراكم تقني مكثف في الأصول الرقمية ومخاطر فريدة وغير مسبوقة في الأسهم الأمريكية (ترامب/ماسك). يستلزم نقص البيانات الإقليمية (تاسي) إقامة محيط دفاعي.
+<strong>موقف المخاطر:</strong> <strong>دفاعي / حذر استراتيجي</strong>
+<strong>المحرك الكلي الرئيسي:</strong> <strong>التدخل الجيوسياسي ودورة استبدال التكنولوجيا الصناعية (صوديوم-أيون)</strong></p>
+<hr />
+<h3>2. توجيهات المحفظة الاستثمارية (V6)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align: left;">فئة الأصول</th>
+<th style="text-align: left;">التخصيص</th>
+<th style="text-align: left;">الموقف</th>
+<th style="text-align: left;">الأساس المنطقي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>النقد/السيولة</strong></td>
+<td style="text-align: left;"><strong>35%</strong></td>
+<td style="text-align: left;"><strong>احتياطي ثقيل</strong></td>
+<td style="text-align: left;">حالة عدم يقين قصوى في تناوب القطاعات ومخاطر الأسهم &ldquo;غير المسبوقة&rdquo; (دخول ترامب السوق).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>الأصول المشفرة</strong></td>
+<td style="text-align: left;"><strong>20%</strong></td>
+<td style="text-align: left;"><strong>تجميع البيتكوين</strong></td>
+<td style="text-align: left;">أنماط التجميع واسعة النطاق مستمرة على الرغم من &ldquo;الاجتثاث المشفر&rdquo; وإفصاحات هوسكينسون.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>الأسهم الدفاعية</strong></td>
+<td style="text-align: left;"><strong>20%</strong></td>
+<td style="text-align: left;"><strong>تقليم القطاعات</strong></td>
+<td style="text-align: left;">تجنب الشركات التي تعتمد بشكل كبير على الإعلانات (السيارات) والمتخلفة (الخطوط الجوية الأمريكية)؛ والتحوط من تقلبات ترامب/ماسك.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>تخزين الطاقة</strong></td>
+<td style="text-align: left;"><strong>15%</strong></td>
+<td style="text-align: left;"><strong>زيادة الوزن الاستثماري للصوديوم-أيون</strong></td>
+<td style="text-align: left;">استعداد CATL للإنتاج وتثبيت التصنيع في ألمانيا يشيران إلى نقطة ارتكاز لمنحنى التكلفة.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>الذكاء الاصطناعي الرائد</strong></td>
+<td style="text-align: left;"><strong>10%</strong></td>
+<td style="text-align: left;"><strong>تعرض تكتيكي</strong></td>
+<td style="text-align: left;">وتيرة الاختراق (Claude/Opus) عالية؛ مخاطر الحوكمة/الدعاية تحد من الدخول الأكبر.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3>3. أفضل تخصيص للقطاعات من حيث العائد إلى المخاطر</h3>
+<ol>
+<li><strong>تخزين الطاقة (صوديوم-أيون) [30%]</strong>: ريادة CATL + هيمنة التصنيع الألمانية + مكاسب في كفاءة الأنود.</li>
+<li><strong>البنية التحتية للذكاء الاصطناعي [25%]</strong>: الذكاء الاصطناعي المؤسسي (Mistral/Cisco) وأنظمة الأمن الوكيل.</li>
+<li><strong>الذهب الرقمي (BTC) [20%]</strong>: التراكم الفني خلال أحداث الاستسلام.</li>
+<li><strong>التكنولوجيا الصحية (ثانوية) [15%]</strong>: مراقبة Hims &amp; Hers مقابل الناتج القانوني لـ Novo Nordisk للدخول في حالة الإزاحة.</li>
+<li><strong>القطاعات المالية في تاسي [10%]</strong>: الحفاظ على الموقف لحين استعادة بيانات المراقبة الإقليمية.</li>
+</ol>
+<hr />
+<h3>4. حكم &ldquo;الموقف السابق&rdquo;</h3>
+<p><strong>الحالة:</strong> <strong>التقييم الأولي</strong>
+<strong>ملاحظات:</strong> النشر الأول لتنسيق &ldquo;القائد&rdquo;. وقد أسس هذا الخط الأساسي لتاريخ 2026-02-07. ستقيس الموجزات المستقبلية الفرق مقابل هذه اللقطة.</p>
+<hr />
+<h3>5. حلقة الاشتراطات التنفيذية (إذا/ثم)</h3>
+<ul>
+<li><strong>إذا</strong> كان BTC.D &lt; 55% <strong>ثم</strong> الانتقال بقوة من التعرض للعملات البديلة إلى BTC Core.</li>
+<li><strong>إذا</strong> تجاوزت مراكز ترامب في الأسهم B في الأصول المدارة المعلنة <strong>ثم</strong> زيادة التحوط الدفاعي/موقف VIX.</li>
+<li><strong>إذا</strong> أكدت مواصفات أيونات الصوديوم CATL نقطة سعر &lt; 0/كيلو واط في الساعة <strong>ثم</strong> زيادة الوزن الاستثماري لقطاع تخزين الطاقة بنسبة 10%.</li>
+<li><strong>إذا</strong> كان هامش ربح الخطوط الجوية الأمريكية متخلفًا &gt; 500 نقطة أساس مقارنة بمتوسط الصناعة <strong>ثم</strong> الخروج من قطاع النقل بالكامل.</li>
+<li><strong>إذا</strong> كان VIX &gt;= 20 <strong>ثم</strong> الحفاظ على وضع نقدي بنسبة 35%+؛ عدم نشر الاحتياطيات عند الانتكاسات.</li>
+</ul>
+<hr />
+<h3>6. تحليل الذكاء الاصطناعي</h3>
+<p><strong>نظام السوق والتمركز التكتيكي</strong>
+يهيمن على نظام السوق الحالي <strong>ديناميكيات القوة الخاصة</strong>. إن دخول الشخصيات السياسية (ترامب) في شراء الأسهم المباشر واحتمال حدوث اندماج بقيادة ماسك بقيمة 0.25 تريليون دولار يخلق تقلبًا في &ldquo;لاعب القوة&rdquo; لا تستطيع المؤشرات الكلية التقليدية حسابه. إن &ldquo;اليقين&rdquo; في سوق الأسهم يتآكل، مما يجبر السيولة الذكية على التوجه نحو اختراقات التكنولوجيا الصلبة (بطاريات أيونات الصوديوم) والتراكم اللامركزي (بيتكوين).</p>
+<p><strong>الآثار المترتبة على الأصول المتداخلة</strong>
+تتوقف تناوبات القطاعات حيث تجلس الشركات المصنعة للمعدات الأصلية (وخاصة السيارات) على الهامش بسبب عدم اليقين بشأن الإعلانات. وهذا يخلق فراغًا تملأه &ldquo;التكنولوجيا الرائدة&rdquo; (الذكاء الاصطناعي/البطاريات). تهاجر رؤوس الأموال نحو الكيانات القادرة على إظهار الابتكار الجاهز للإنتاج، وتحديدًا نشر CATL لأيونات الصوديوم في السيارات الكهربائية والذكاء الاصطناعي على مستوى المؤسسات Mistral.</p>
+<p><strong>المخاطر الرئيسية التي يجب مراقبتها</strong>
+*   <strong>تغلغل الدعاية:</strong> يتم تصنيف أنظمة الذكاء الاصطناعي بشكل متزايد على أنها &ldquo;تدهور الحقيقة&rdquo; واستخدام الدعاية، مما يهدد سلامة الأنظمة العاملة.
+*   <strong>نقطة عمياء تاسي:</strong> يؤدي نقص بيانات السوق السعودية إلىCreate فجوة خطر إقليمية يجب ملؤها لتحقيق الاستقرار في تقييمات قطاع الطاقة.
+*   <strong>التجزئة القانونية:</strong> تعد المعركة القانونية بين Hims &amp; Hers و Novo Nordisk بمثابة جرس إنذار لخطر الإزاحة العامة في السوق.</p>
             </div>
             
             <script>
@@ -588,7 +697,7 @@ Sector rotations are stalling as OEMs (specifically Automotive) sit on the sidel
         </main>
 
         <footer>
-            <p>GENERATED BY MEDOAS PIPELINE v2.0 // 2026-02-08 04:15:05 UTC</p>
+            <p>GENERATED BY MEDOAS PIPELINE v2.0 // 2026-02-08 04:26:58 UTC</p>
             <p style="margin-top: 10px; font-size: 0.7rem; color: #444;">OBJECTIVE ANALYSIS. NO SPECULATION. NO BIAS.</p>
         </footer>
     </div>

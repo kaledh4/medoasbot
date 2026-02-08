@@ -52,14 +52,19 @@ def generate_html():
         
         # 3. Process Arabic
         if text_ar:
-            brief_html_ar = markdown.markdown(text_ar, extensions=['extra', 'smarty'])
-            # Post-process Arabic (Same patterns, adapted if needed, but keeping simple for now)
+            # Strip markdown code fences if the LLM wrapped it
+            text_ar_clean = text_ar.strip()
+            if text_ar_clean.startswith('```markdown'):
+                text_ar_clean = text_ar_clean[len('```markdown'):].strip()
+            if text_ar_clean.startswith('```'):
+                text_ar_clean = text_ar_clean[3:].strip()
+            if text_ar_clean.endswith('```'):
+                text_ar_clean = text_ar_clean[:-3].strip()
+            
+            brief_html_ar = markdown.markdown(text_ar_clean, extensions=['extra', 'smarty', 'tables'])
+            # Post-process Arabic
             brief_html_ar = re.sub(source_pattern, r'<a href="\1" target="_blank" class="source-link">RESEARCH SOURCE</a>', brief_html_ar)
             brief_html_ar = re.sub(r'(<table>.*?</table>)', r'<div class="table-wrapper">\1</div>', brief_html_ar, flags=re.DOTALL)
-            # Arabic Action Needed might be different if translated, but let's assume specific tag if consistent or rely on span class if regex matches
-            # Ideally the translator acts on [ACTION NEEDED], but let's leave colorization for standard tag or specific Arabic phrase if known.
-            # For now, we apply standard highlighting to the English tag if present, or we can update regex to catch Arabic equivalent if we knew it.
-            # Assuming translator keeps [ACTION NEEDED] or translates it. Let's just wrap tables and links.
 
     html_template = f"""
 <!DOCTYPE html>
@@ -363,10 +368,18 @@ def generate_html():
         }}
 
         /* Mobile Responsive Adjustments */
-        @media (max-width: 600px) {{
+        @media (max-width: 768px) {{
+            .container {{
+                padding: 30px 16px;
+            }}
+            
             header {{
                 flex-direction: column;
                 align-items: flex-start;
+            }}
+            
+            h1 {{
+                font-size: 1.6rem;
             }}
             
             .lang-toggle {{
@@ -375,20 +388,41 @@ def generate_html():
                 width: 100%;
                 text-align: center;
             }}
+            
+            .brief-content {{
+                padding: 20px 16px;
+            }}
+            
+            .brief-content h3 {{
+                font-size: 1rem;
+            }}
+            
+            .brief-content p {{
+                font-size: 0.9rem;
+                word-wrap: break-word;
+            }}
 
-            /* Mobile Table Cards */
+            /* Mobile Table Cards - Complete Overhaul */
             .table-wrapper {{
                 border: none;
                 background: transparent;
+                overflow: visible;
+                margin: 15px 0;
             }}
 
+            .brief-content table {{
+                min-width: auto;
+                width: 100%;
+            }}
+            
             .brief-content table, 
             .brief-content thead, 
             .brief-content tbody, 
             .brief-content th, 
             .brief-content td, 
             .brief-content tr {{ 
-                display: block; 
+                display: block;
+                width: 100%;
             }}
             
             .brief-content thead tr {{ 
@@ -397,38 +431,92 @@ def generate_html():
                 left: -9999px;
             }}
             
-            .brief-content tr {{ 
+            .brief-content tbody tr {{ 
                 border: 1px solid var(--border);
-                margin-bottom: 20px;
+                margin-bottom: 16px;
                 border-radius: 12px;
-                background: var(--card-bg);
-                padding: 15px;
+                background: rgba(255, 255, 255, 0.03);
+                padding: 16px;
+                display: block;
             }}
             
             .brief-content td {{ 
                 border: none;
                 position: relative;
-                padding-left: 0;
-                padding-bottom: 8px;
+                padding: 6px 0;
+                padding-left: 0 !important;
+                text-align: left !important;
+                display: block;
+                width: 100%;
+                white-space: normal;
+                word-wrap: break-word;
+                max-width: 100%;
+                min-width: auto;
             }}
             
+            /* Asset Class Name - First Column */
             .brief-content td:nth-of-type(1) {{
-                font-weight: 800;
+                font-weight: 700;
                 color: var(--accent);
-                font-size: 1.1rem;
+                font-size: 1rem;
                 border-bottom: 1px solid var(--border);
-                margin-bottom: 8px;
-                padding-bottom: 8px;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
             }}
             
-            /* English Labels */
-            .brief-content td:nth-of-type(2)::before {{ content: "Allocation: "; color: var(--text-dim); font-size: 0.8rem; }}
-            .brief-content td:nth-of-type(3)::before {{ content: "Stance: "; color: var(--text-dim); font-size: 0.8rem; }}
-            .brief-content td:nth-of-type(4) {{ color: var(--text-dim); font-style: italic; margin-top: 5px; }}
+            /* Allocation - Second Column */
+            .brief-content td:nth-of-type(2)::before {{ 
+                content: "Allocation: "; 
+                color: var(--text-dim); 
+                font-size: 0.75rem;
+                font-weight: 400;
+                display: inline;
+            }}
+            .brief-content td:nth-of-type(2) {{
+                font-weight: 600;
+                color: #fff;
+            }}
+            
+            /* Stance - Third Column */
+            .brief-content td:nth-of-type(3)::before {{ 
+                content: "Stance: "; 
+                color: var(--text-dim); 
+                font-size: 0.75rem;
+                font-weight: 400;
+                display: inline;
+            }}
+            .brief-content td:nth-of-type(3) {{
+                color: #fff;
+            }}
+            
+            /* Rationale - Fourth Column */
+            .brief-content td:nth-of-type(4) {{ 
+                color: var(--text-dim); 
+                font-style: italic; 
+                margin-top: 8px;
+                padding-top: 8px;
+                border-top: 1px dashed var(--border);
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }}
+            .brief-content td:nth-of-type(4)::before {{
+                content: "Rationale: ";
+                color: var(--text-dim);
+                font-size: 0.75rem;
+                font-weight: 400;
+                font-style: normal;
+                display: block;
+                margin-bottom: 4px;
+            }}
             
             /* Arabic Labels (RTL) */
             .rtl .brief-content td:nth-of-type(2)::before {{ content: "التوزيع: "; }}
             .rtl .brief-content td:nth-of-type(3)::before {{ content: "الموقف: "; }}
+            .rtl .brief-content td:nth-of-type(4)::before {{ content: "الأساس المنطقي: "; }}
+            
+            .rtl .brief-content td {{
+                text-align: right !important;
+            }}
         }}
 
         footer {{
