@@ -38,16 +38,22 @@ def run_2hour_pulse():
         if db.is_duplicate(title_hash):
             continue
             
-        # 3. Use Logic Engine to analyze
+        # 3. New Filter Stage: The Bouncer
+        # Only meaningful content gets past here.
+        if not engine.assess_relevance(article['title'], article['text']):
+            logging.info(f"Skipped low relevance: {article['title']}")
+            continue
+
+        # 4. Use Logic Engine to analyze (The Deep Dive)
         # Get recent context for "Talk-Through"
         context = db.get_recent_toon_phrases(limit=3)
         analysis = engine.analyze(article['text'], previous_context=context)
         
         if analysis:
-            # 4. Save to Memory
+            # 5. Save to Memory
             db.add_mention(article['source'], article['text'], analysis, title_hash, url=article.get('link'))
             new_toon_phrases.append(analysis)
-            logging.info(f"Analyzed: {article['title']}")
+            logging.info(f"Analyzed & Saved: {article['title']}")
         
     # 5. Send to Telegram
     if new_toon_phrases:

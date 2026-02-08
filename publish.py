@@ -337,6 +337,16 @@ def generate_html():
             padding: 12px 15px;
             border-bottom: 1px solid var(--border);
             color: var(--text-main);
+            vertical-align: top;
+        }}
+        
+        /* Force Rationale column to wrap */
+        .brief-content td:last-child {{
+            white-space: normal;
+            min-width: 200px;
+            max-width: 350px;
+            word-wrap: break-word;
+            line-height: 1.5;
         }}
 
         .brief-content tr:last-child td {{

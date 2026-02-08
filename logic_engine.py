@@ -6,39 +6,86 @@ class LogicEngine:
     def __init__(self):
         self.api_key = os.getenv("OPENROUTER_API_KEY")
         self.url = "https://openrouter.ai/api/v1/chat/completions"
-        self.system_prompt = """
-You are a Media Analyst with a 100% cynicism setting. Your job is to strip away the 'Narrative Layer.'
-* Identify the 'Linguistic Trap': Point out emotional adjectives (e.g., 'stunning', 'dark') used to manipulate.
-* Omission Check: Note what isn't being said (e.g., historical context or opposing viewpoints).
-* The 'Who Benefits' Test: Identify the likely entity funding or benefiting from this specific framing.
-* Tone: Output ONLY in 'Toon Phrases'—snappy, character-driven, street-smart dialogue. No JSON, no formal reports.
-"""
-
-    def analyze(self, text, previous_context=None):
-        messages = [
-            {"role": "system", "content": self.system_prompt}
-        ]
-        
-        if previous_context:
-            context_str = "\n".join(previous_context)
-            messages.append({"role": "user", "content": f"Here is what we said earlier:\n{context_str}\n\nHow does this new info change the story?"})
-        
-        messages.append({"role": "user", "content": f"Analyze this:\n{text}"})
-
-        headers = {
+        self.headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://github.com/OpenClaw/OpenClaw", # Required by OpenRouter
+            "HTTP-Referer": "https://github.com/OpenClaw/OpenClaw",
             "X-Title": "Daily Brief Analyst"
         }
+
+    def assess_relevance(self, title, summary):
+        """
+        Stage 1: The Bouncer.
+        Cheap, fast check to see if this is even worth processing.
+        Returns: Boolean (True/False)
+        """
+        system_prompt = """
+You are the Gatekeeper for a high-level intelligence briefing.
+Your job: Filter out noise, clickbait, and irrelevant news.
+Keep ONLY items related to:
+1. Breakthrough Battery Tech (Solid State, Na-Ion) in production/scaling.
+2. AGI/ASI milestones & significant LLM architectural shifts (no random app releases).
+3. Crypto Market Structure shifts (ETF flows, sovereign adoption, major regulatory moves).
+4. Geopolitical events DIRECTLY impacting supply chains or energy.
+
+Input: Title + Summary
+Output: JSON {"keep": true/false, "reason": "short reason"}
+"""
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": f"Title: {title}\nSummary: {summary}"}
+        ]
         
+        try:
+            payload = {
+                "model": "google/gemini-2.0-flash-001",
+                "messages": messages,
+                "response_format": {"type": "json_object"}
+            }
+            response = requests.post(self.url, headers=self.headers, data=json.dumps(payload))
+            response.raise_for_status()
+            result = response.json()
+            content = json.loads(result['choices'][0]['message']['content'])
+            return content.get("keep", False)
+        except Exception:
+            # Fallback: keep it if we can't decide (fail open) or log error
+            return False 
+
+    def analyze(self, text, previous_context=None):
+        """
+        Stage 2: The Deep Dive.
+        Analyze the 'kept' items for deep implications.
+        """
+        system_prompt = """
+You are a Deep/Covert Intelligence Analyst.
+Goal: Extract signal from noise. MAXIMUM DENSITY.
+Do not summarize. ANALYZE.
+
+Directives:
+1. STRIP the Narrative: Ignore "groundbreaking", "shocking". What actually happened?
+2. SECOND-ORDER EFFECTS: If X happened, what breaks? Who loses?
+3. FOLLOW THE MONEY: Who benefits?
+4. DENSITY: Use compressed language. No fluff.
+
+Output Format (Bullet points):
+* [FACT]: The raw, unadorned event.
+* [IMPLICATION]: The immediate result.
+* [SIGNAL]: The deep market/strategic key.
+"""
+
+        if previous_context:
+            context_str = "\n".join(previous_context)
+            messages.append({"role": "user", "content": f"Context/History:\n{context_str}\n\nNew Intel to Analyze:\n{text}"})
+        else:
+            messages.append({"role": "user", "content": f"Analyze this intel:\n{text}"})
+
         payload = {
-            "model": "google/gemini-2.0-flash-001", # GLM-4 is not ubiquitous, Gemini 2.0 Flash is fast and cheap
+            "model": "google/gemini-2.0-flash-001",
             "messages": messages
         }
 
         try:
-            response = requests.post(self.url, headers=headers, data=json.dumps(payload))
+            response = requests.post(self.url, headers=self.headers, data=json.dumps(payload))
             response.raise_for_status()
             result = response.json()
             return result['choices'][0]['message']['content'].strip()
@@ -48,7 +95,7 @@ You are a Media Analyst with a 100% cynicism setting. Your job is to strip away 
 
     def generate_executive_brief(self, content):
         system_prompt = """
-You are Medoas Intelligence's senior analyst. Transform the raw intelligence brief into "The Commander" executive decision format.
+You are Medoas Intelligence's senior analyst. Transform the raw intelligence brief (containing [FACT], [IMPLICATION], and [SIGNAL] bullets) into "The Commander" executive decision format.
 
 OUTPUT REQUIREMENTS:
 

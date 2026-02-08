@@ -17,7 +17,7 @@ class Feeder:
         articles = []
         for source in sources.get("rss", []):
             feed = feedparser.parse(source['url'])
-            for entry in feed.entries[:5]: # Limit to 5 per source
+            for entry in feed.entries[:20]: # Expanded scan range (filtered later)
                 title = entry.title
                 link = entry.link
                 summary = getattr(entry, 'summary', '')
