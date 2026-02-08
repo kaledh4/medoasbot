@@ -4,6 +4,11 @@ from datetime import datetime
 import markdown
 import re
 
+from dotenv import load_dotenv
+
+# Load environment variables (for translation)
+load_dotenv(dotenv_path="/root/daily_brief/.env")
+
 DB_PATH = "/root/daily_brief/data/briefs.db"
 OUTPUT_PATH = "/root/daily_brief/docs/index.html"
 
