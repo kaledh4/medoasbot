@@ -76,17 +76,36 @@ def generate_html():
         # 4. Generate Intelligence Stream HTML
         stream_html = ""
         for source, analysis, url, ts in mentions:
-            # Highlight FACT/IMPLICATION/SIGNAL
-            analysis_fmt = analysis.replace("[FACT]:", '<span class="intel-label fact">[FACT]:</span>')
-            analysis_fmt = analysis_fmt.replace("[IMPLICATION]:", '<span class="intel-label impl">[IMPLICATION]:</span>')
-            analysis_fmt = analysis_fmt.replace("[SIGNAL]:", '<span class="intel-label signal">[SIGNAL]:</span>')
+            # Convert analysis markdown to HTML first
+            # Use 'extra' for better handling of specialized markdown if needed
+            analysis_html = markdown.markdown(analysis, extensions=['extra', 'smarty'])
+            
+            # Robust tag replacement: handles naked [FACT], bolded **[FACT]**, and parsed <strong>[FACT]</strong>
+            # Also clears trailing colons and ensures the labels are clean inside the dossier cards
+            tag_patterns = {
+                r'(\*\*|<strong>)?\s*\[FACT\]:?\s*(\*\*|</strong>)?': '<span class="intel-label fact">FACT</span>',
+                r'(\*\*|<strong>)?\s*\[IMPLICATION\]:?\s*(\*\*|</strong>)?': '<span class="intel-label impl">IMPLICATION</span>',
+                r'(\*\*|<strong>)?\s*\[SIGNAL\]:?\s*(\*\*|</strong>)?': '<span class="intel-label signal">SIGNAL</span>'
+            }
+            
+            for pattern, replacement in tag_patterns.items():
+                analysis_html = re.sub(pattern, replacement, analysis_html, flags=re.IGNORECASE)
+            
+            # Final cleanup of common LLM artifacts
+            analysis_html = analysis_html.replace('**', '').replace('__', '')
             
             source_link = f' <a href="{url}" target="_blank" class="source-link">ORIGIN</a>' if url else ""
             
             stream_html += f"""
             <div class="intel-pulse">
-                <div class="intel-meta">{ts} // SOURCE: {source}{source_link}</div>
-                <div class="intel-body">{analysis_fmt}</div>
+                <div class="intel-header">
+                    <div class="header-meta-group">
+                        <span class="pulse-ts">{ts}</span>
+                        <span class="pulse-source">REF: {source}</span>
+                    </div>
+                    {source_link}
+                </div>
+                <div class="intel-content dossier-style">{analysis_html}</div>
             </div>
             """
         
@@ -395,42 +414,133 @@ def generate_html():
             background: rgba(255, 255, 255, 0.03);
         }}
 
-        /* Intelligence Stream Styling */
-        .intel-pulse {{
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-left: 2px solid var(--accent);
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-size: 0.95rem;
+        /* Intelligence Stream Styling (Premium Dossier Look) */
+        .intel-stream {{
+            display: grid;
+            gap: 24px;
+            margin-top: 30px;
         }}
 
-        .intel-meta {{
+        .intel-pulse {{
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 255, 0.08);
+            border-left: 4px solid var(--accent);
+            padding: 24px;
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }}
+
+        .intel-pulse:hover {{
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(0, 242, 255, 0.3);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 255, 0.1);
+            transform: translateY(-4px);
+        }}
+
+        .intel-header {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px;
+        }}
+
+        .header-meta-group {{
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }}
+
+        .pulse-ts {{
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            background: rgba(0, 242, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }}
+
+        .pulse-source {{
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
             color: var(--text-dim);
-            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }}
 
-        .intel-body {{
-            line-height: 1.6;
+        .intel-content {{
+            line-height: 1.8;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+        }}
+
+        .intel-content p {{
+            margin-bottom: 16px;
+        }}
+
+        .intel-content ul {{
+            margin: 15px 0;
+            padding-left: 0;
+            list-style: none;
+        }}
+
+        .intel-content li {{
+            margin-bottom: 12px;
+            padding-left: 25px !important;
+            position: relative;
+            font-size: 0.95rem;
+        }}
+
+        .intel-content li::before {{
+            content: "•";
+            position: absolute;
+            left: 5px;
+            color: var(--accent);
+            font-weight: bold;
         }}
 
         .intel-label {{
-            font-weight: 700;
-            font-size: 0.8rem;
+            font-weight: 900;
+            font-size: 0.65rem;
             font-family: 'JetBrains Mono', monospace;
-            padding: 1px 4px;
+            padding: 2px 10px;
             border-radius: 4px;
-            margin-right: 5px;
+            margin-right: 12px;
+            display: inline-block;
+            vertical-align: top;
+            letter-spacing: 0.15em;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }}
 
-        .fact {{ background: rgba(0, 242, 255, 0.1); color: var(--accent); }}
-        .impl {{ background: rgba(255, 255, 255, 0.05); color: #fff; }}
-        .signal {{ background: rgba(255, 75, 75, 0.1); color: #ff4b4b; }}
+        .fact {{ 
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.1), rgba(0, 242, 255, 0.05)); 
+            color: var(--accent); 
+            border: 1px solid rgba(0, 242, 255, 0.3); 
+        }}
+        .impl {{ 
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)); 
+            color: #eee; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }}
+        .signal {{ 
+            background: linear-gradient(135deg, rgba(255, 75, 75, 0.15), rgba(255, 75, 75, 0.05)); 
+            color: #ff4b4b; 
+            border: 1px solid rgba(255, 75, 75, 0.3); 
+        }}
+
+        .empty-state {{
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dim);
+            font-style: italic;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.01);
+        }}
 
         /* Mobile Responsive Adjustments */
         @media (max-width: 768px) {{
