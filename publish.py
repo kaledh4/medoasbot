@@ -526,10 +526,43 @@ def generate_html():
             color: #eee; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
         }}
-        .signal {{ 
-            background: linear-gradient(135deg, rgba(255, 75, 75, 0.15), rgba(255, 75, 75, 0.05)); 
-            color: #ff4b4b; 
-            border: 1px solid rgba(255, 75, 75, 0.3); 
+        .signal {{ background: rgba(255, 75, 75, 0.15); color: #ff4b4b; border: 1px solid rgba(255, 75, 75, 0.3); }}
+
+        /* Collapsible Recon Log Styling */
+        .recon-details {{
+            margin-top: 60px;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }}
+
+        .recon-summary {{
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            transition: background 0.2s ease;
+        }}
+
+        .recon-summary:hover {{
+            background: rgba(0, 242, 255, 0.05);
+        }}
+
+        .recon-summary::-webkit-details-marker {{
+            display: none;
+        }}
+
+        .intel-stream {{
+            padding: 24px;
+            display: grid;
+            gap: 24px;
         }}
 
         .empty-state {{
@@ -760,19 +793,27 @@ def generate_html():
             <div class="brief-content active" id="brief-en">
                 {brief_html_en if brief_html_en else '<div class="empty-state">No executive intelligence generated for today yet. Waiting for end-of-day synthesis...</div>'}
                 
-                <h2 style="margin-top: 60px;">Tactical Intelligence Stream</h2>
-                <div class="intel-stream">
-                    {stream_html}
-                </div>
+                <details class="recon-details">
+                    <summary class="recon-summary">
+                        <span>OPEN RECON LOG (TACTICAL STREAM)</span>
+                    </summary>
+                    <div class="intel-stream">
+                        {stream_html}
+                    </div>
+                </details>
             </div>
             
             <div class="brief-content ar-font" id="brief-ar">
                 {brief_html_ar if brief_html_ar else '<div class="empty-state">جارٍ إعداد الترجمة... (Translation pending)</div>'}
                 
-                <h2 style="margin-top: 60px;">موجز الاستخبارات التكتيكية</h2>
-                <div class="intel-stream">
-                    {stream_html}
-                </div>
+                <details class="recon-details">
+                    <summary class="recon-summary">
+                        <span>فتح سجل الاستطلاع (موجز تكتيكي)</span>
+                    </summary>
+                    <div class="intel-stream">
+                        {stream_html}
+                    </div>
+                </details>
             </div>
             
             <script>
