@@ -375,15 +375,16 @@
 
         .intel-content li {
             margin-bottom: 12px;
-            padding-left: 25px !important;
+            padding-left: 0 !important; /* Remove bullet space for tagged items */
             position: relative;
             font-size: 0.95rem;
         }
 
-        .intel-content li::before {
+        /* Apply bullets only to nested lists or untagged items */
+        .intel-content li:not(:has(.intel-label))::before {
             content: "•";
             position: absolute;
-            left: 5px;
+            left: -15px;
             color: var(--accent);
             font-weight: bold;
         }
@@ -676,7 +677,8 @@
 
         <main>
             <div class="brief-content active" id="brief-en">
-                <h3>THE COMMANDER</h3>
+                <div class="commander-output">
+                    <h3>THE COMMANDER</h3>
 <p><strong>EXECUTIVE SYNTHESIS:</strong></p>
 <p>The market is undergoing rapid transformation driven by AI breakthroughs and geopolitical shifts. AI innovation is creating both substantial opportunities and significant vulnerabilities, requiring careful portfolio adjustments. The risk posture is <strong>Transitional</strong>, balancing aggressive AI investments with defensive positioning against economic and security uncertainties. Key macro driver: <strong>AI Breakthrough Frequency</strong>.</p>
 <p><strong>PORTFOLIO GUIDANCE (V6):</strong></p>
@@ -737,6 +739,7 @@
 <p><strong>AI ANALYSIS:</strong></p>
 <p>The current market regime is defined by an accelerating AI arms race, characterized by rapid innovation, infrastructure build-out, and escalating security concerns across sectors including crypto &amp; energy. Cross-asset implications reflect a bifurcated landscape: opportunities in AI infrastructure and security, balanced by caution in sectors facing displacement or resource constraints.</p>
 <p>Tactical positioning emphasizes overweighting AI/Tech. Key risks include AI vulnerabilities (prompt injection incidents), China&rsquo;s crackdowns destabilizing crypto, and potential AI infrastructure bottlenecks. Immediate actions include performing due diligence on fund exposure to IBIT in order to avert systemic issues, while also scrutinizing Binance&rsquo;s trading policies and surveillance mechanisms. Emphasis on monitoring market reactions to Amazon&rsquo;s ROI on AI infrastructure projects.</p>
+                </div>
                 
                 <details class="recon-details">
                     <summary class="recon-summary">
@@ -1577,9 +1580,10 @@ eyJoaXN0b3J5IjpbLTE4NTE1NDQ4MTldfQ==
             </div>
             
             <div class="brief-content ar-font" id="brief-ar">
-                <h3>القائد</h3>
+                <div class="commander-output">
+                    <h3>القائد</h3>
 <p><strong>ملخص تنفيذي:</strong></p>
-<p>يشهد السوق تحولاً سريعاً مدفوعاً بالاختراقات الذكاء الاصطناعي والتحولات الجيوسياسية. يخلق الابتكار في مجال الذكاء الاصطناعي فرصاً كبيرة ونقاط ضعف كبيرة، مما يتطلب تعديلات دقيقة للمحفظة. وضع المخاطر هو <strong>انتقالي</strong>، يوازن بين الاستثمارات القوية في الذكاء الاصطناعي والتحوط الدفاعي ضد أوجه uncertainty الاقتصادية والأمنية. المحرك الرئيسي للاقتصاد الكلي: <strong>وتيرة اختراقات الذكاء الاصطناعي</strong>.</p>
+<p>يشهد السوق تحولاً سريعاً مدفوعاً بالاختراقات في مجال الذكاء الاصطناعي والتغيرات الجيوسياسية. يخلق الابتكار في الذكاء الاصطناعي فرصاً كبيرة ونقاط ضعف كبيرة على حد سواء، مما يتطلب تعديلات دقيقة في المحفظة. الوضعية المخاطرية هي <strong>انتقالية</strong>، حيث توازن بين الاستثمارات القوية في الذكاء الاصطناعي والمراكز الدفاعية ضد الشكوك الاقتصادية والأمنية. المحرك الرئيسي للاقتصاد الكلي: <strong>وتيرة الاختراقات في الذكاء الاصطناعي</strong>.</p>
 <p><strong>توجيهات المحفظة (V6):</strong></p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1592,52 +1596,53 @@ eyJoaXN0b3J5IjpbLTE4NTE1NDQ4MTldfQ==
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">العملات المشفرة (BTC/ETH)</td>
+<td style="text-align: left;">العملات الرقمية (BTC/ETH)</td>
 <td style="text-align: left;">15%</td>
-<td style="text-align: left;">التوجه نحو هيمنة BTC</td>
-<td style="text-align: left;">تُظهر بيانات Binance تبايناً بين الطلب الفوري والسعر، مما يشير إلى التلاعب. قد يشير الانهيار الأخير، إضافة إلى انخفاض الهيمنة، إلى قاع محلي. الحاجة إلى تحيز نحو الـ BTC. حملة الصين القمعية سلبية لرياح القطاع المواتية.</td>
+<td style="text-align: left;">تدوير نحو BTC بشكل كبير</td>
+<td style="text-align: left;">تُظهر بيانات منصة Binance تبايناً بين الطلب الفعلي (Spot Demand) والسعر، مما يشير إلى تلاعب. قد يشير الانهيار الأخير، المقترن بانخفاض الهيمنة، إلى قاع محلي. الحاجة إلى ميل كبير نحو BTC. حملة الصين السلبية تؤثر سلبًا على رياح القطاع المواتية.</td>
 </tr>
 <tr>
 <td style="text-align: left;">المعادن (الذهب)</td>
 <td style="text-align: left;">5%</td>
-<td style="text-align: left;">الاحتفاظ</td>
-<td style="text-align: left;">مخزن للقيمة. تحوط للاقتصاد الكلي نظراً لارتفاع احتمالات الأزمات.</td>
+<td style="text-align: left;">احتفاظ</td>
+<td style="text-align: left;">مخزن قيمة. تحوط اقتصادي كلي في ضوء الأزمات المحتملة المتزايدة.</td>
 </tr>
 <tr>
-<td style="text-align: left;">الأسهم المالية</td>
+<td style="text-align: left;">الأسهم</td>
 <td style="text-align: left;">60%</td>
-<td style="text-align: left;">زيادة الوزن النسبي</td>
-<td style="text-align: left;">الاستثمارات الكبيرة في البنية التحتية للذكاء الاصطناعي (Amazon) والقطاعات ذات الصلة تقدم مكاسب محتملة، على الرغم من شكوك السوق على المدى القريب.</td>
+<td style="text-align: left;">زيادة الوزن</td>
+<td style="text-align: left;">تمثل الاستثمارات الكبيرة في البنية التحتية للذكاء الاصطناعي (Amazon) والقطاعات ذات الصلة مكاسب ممكنة، على الرغم من شك السوق على المدى القريب.</td>
 </tr>
 <tr>
-<td style="text-align: left;">التكنولوجيا الرائدة (الذكاء الاصطناعي/التكنولوجيا)</td>
+<td style="text-align: left;">متقدمة (AI/Tech)</td>
 <td style="text-align: left;">20%</td>
-<td style="text-align: left;">زيادة الوزن النسبي</td>
-<td style="text-align: left;">يشير اندماج SpaceX/xAI التابع لـ Elon Musk ومراكز البيانات المدارية إلى النمو طويل الأجل وإمكانات التطور التكنولوجي العالية. ستتكون التكنولوجيا الرائدة من حيازات في Factorial وشركات SSB الأخرى، نظراً لاستثمار POSCO الأخير.</td>
+<td style="text-align: left;">زيادة الوزن</td>
+<td style="text-align: left;">يشير اندماج SpaceX/xAI لـ Elon Musk مراكز البيانات المدارية إلى نمو طويل الأجل وإمكانات تخريبية عالية. ستتألف المتقدمة من حيازات في Factorial وشركات SSB الأخرى، بالنظر إلى استثمار POSCO الأخير.</td>
 </tr>
 </tbody>
 </table></div>
 <p><strong>أفضل تخصيص للقطاعات من حيث العائد إلى المخاطر:</strong></p>
 <ol>
-<li><strong>البنية التحتية للذكاء الاصطناعي (30%):</strong> استثمار Amazon بقيمة 200 مليار دولار والتكامل الرأسي لشركات التكنولوجيا الكبرى.</li>
-<li><strong>أمن الذكاء الاصطناعي (25%):</strong> نقاط ضعف وكلاء الذكاء الاصطناعي (حقن المطالبات والاختراقات) تدفع الطلب. الليثيوم المعاد تدويره من Cylib.</li>
-<li><strong>الطاقة المتجددة (20%):</strong> صادرات الغاز البولندية إلى أوكرانيا وتطورات توربينات الرياح الصينية.</li>
+<li><strong>البنية التحتية للذكاء الاصطناعي (30%):</strong> استثمار Amazon بقيمة 200 مليار دولار والتكامل الرأسي للشركات التقنية الكبرى.</li>
+<li><strong>أمن الذكاء الاصطناعي (25%):</strong> نقاط الضعف في وكلاء الذكاء الاصطناعي (حقن المطالبات والاختراقات) تدفع الطلب. الليثيوم المعاد تدويره من قبل Cylib.</li>
+<li><strong>الطاقة المتجددة (20%):</strong> صادرات الغاز البولندية إلى أوكرانيا وتقدم الصين في توربينات الرياح.</li>
 <li><strong>SSB (20%):</strong> تستثمر POSCO Future M في شركة SSB الناشئة Factorial.</li>
 <li><strong>صناديق الاستثمار العقاري لمراكز البيانات (5%):</strong> زيادة الطلب من عمليات نشر الذكاء الاصطناعي.</li>
 </ol>
-<p><strong>حكم &ldquo;الموقف القديم&rdquo;:</strong> صالح جزئياً. التحول إلى هيمنة BTC مع تخصيص العملات المشفرة. التركيز على أسهم أمن الذكاء الاصطناعي نظراً لثغرة حقن المطالبات.</p>
-<p><strong>حلقة الإجراءات الشرطية (IF/THEN Loop) قابلة للتنفيذ:</strong></p>
+<p><strong>حكم &ldquo;الموقف القديم&rdquo;:</strong> صالح جزئياً. تحول إلى BTC-heavy مع تخصيص العملات الرقمية. ركز على أسهم أمن الذكاء الاصطناعي بالنظر إلى ثغرة حقن المطالبات (Prompt Injection).</p>
+<p><strong>حلقة &ldquo;إذا/إذن&rdquo; قابلة للتنفيذ:</strong></p>
 <ul>
-<li>إذا أصبحت ممارسات Binance مشكوك فيها، فابحث عن المراجحة في البورصات الأخرى.</li>
-<li>إذا انهار لاعب رئيسي بسبب IBIT، فاستعد لتقلبات السوق الفورية.</li>
-<li>إذا وسعت الصين حظرها للعملات المشفرة خارج الحدود الإقليمية، فأعد تقييم التعرض للعملات المشفرة.</li>
-<li>إذا أظهر اقتصاد السلفادور علامات الإجهاد، فقلل التعرض لأصول مخاطر Bitcoin.</li>
-<li>إذا فشلت Anthropic في حل تشبع معيار الذكاء الاصطناعي الخاص بها، فتحول إلى حلول OpenAI.</li>
-<li>إذا أدت قيود الموارد إلى إبطاء تطوير الذكاء الاصطناعي، فقلل من التعرض للبنية التحتية للذكاء الاصطناعي.</li>
+<li>إذا أصبحت ممارسات Binance مشكوك فيها إذن استكشف المراجحة (Arbitrage) في البورصات الأخرى.</li>
+<li>إذا انفجر لاعب رئيسي بسبب IBIT إذن استعد لتقلبات فورية في السوق.</li>
+<li>إذا وسعت الصين حظرها على العملات الرقمية خارج الحدود الإقليمية إذن أعد تقييم التعرض للعملات الرقمية.</li>
+<li>إذا أظهر اقتصاد السلفادور علامات ضائقة إذن قلل من التعرض لأصول مخاطر البيتكوين.</li>
+<li>إذا فشلت Anthropic في حل تشبع معيار (Benchmark) الذكاء الاصطناعي الخاص بها إذن قم بالتدوير إلى حلول OpenAI.</li>
+<li>إذا أبطأت قيود الموارد تطوير الذكاء الاصطناعي إذن قلل من التعرض للبنية التحتية للذكاء الاصطناعي.</li>
 </ul>
 <p><strong>تحليل الذكاء الاصطناعي:</strong></p>
-<p>يتميز نظام السوق الحالي بسباق تسلح متسارع للذكاء الاصطناعي، يتسم بالابتكار السريع، وبناء البنية التحتية، وتصاعد المخاوف الأمنية عبر القطاعات بما في ذلك العملات المشفرة والطاقة. تعكس الآثار المترتبة على الأصول المختلفة مشهداً متشعباً: فرص في البنية التحتية وأمن الذكاء الاصطناعي، متوازنة بالحذر في القطاعات التي تواجه الإزاحة أو قيود الموارد.</p>
-<p>يؤكد تحديد المواقع التكتيكي على زيادة الوزن النسبي للذكاء الاصطناعي / التكنولوجيا. تشمل المخاطر الرئيسية نقاط ضعف الذكاء الاصطناعي (حوادث حقن المطالبات)، وحملات الصين القمعية التي تزعزع استقرار العملات المشفرة، والاختناقات المحتملة في البنية التحتية للذكاء الاصطناعي. تتضمن الإجراءات الفورية بذل العناية الواجبة بشأن تعرض الصندوق لـ IBIT من أجل تجنب المشكلات النظامية، مع التدقيق أيضاً في سياسات التداول وآليات المراقبة الخاصة بـ Binance. التركيز على مراقبة ردود فعل السوق على عائد Amazon على الاستثمار في مشاريع البنية التحتية للذكاء الاصطناعي.</p>
+<p>يتحدد نظام السوق الحالي بسباق تسلح متسارع في مجال الذكاء الاصطناعي، يتميز بالابتكار السريع، وإنشاء البنية التحتية، وتصاعد المخاوف الأمنية عبر القطاعات بما في ذلك العملات الرقمية والطاقة. تعكس الآثار المترتبة على الأصول تعكس مشهداً متشعباً: فرص في البنية التحتية وأمن الذكاء الاصطناعي، متوازنة بالحذر في القطاعات التي تواجه الإزاحة أو قيود الموارد.</p>
+<p>يؤكد التمركز التكتيكي على زيادة وزن الذكاء الاصطناعي/التكنولوجيا. تشمل المخاطر الرئيسية نقاط الضعف في الذكاء الاصطناعي (حوادث حقن المطالبات)، وحملات الصين التي تزعزع استقرار العملات الرقمية، والاختناقات المحتملة في البنية التحتية للذكاء الاصطناعي. تشمل الإجراءات الفورية إجراء العناية الواجبة بشأن تعرض الصندوق لـ IBIT من أجل تجنب المشكلات النظامية، مع التدقيق أيضاً في سياسات التداول وآليات المراقبة الخاصة بـ Binance. التأكيد على مراقبة ردود أفعال السوق على عائد استثمار Amazon في مشاريع البنية التحتية للذكاء الاصطناعي.</p>
+                </div>
                 
                 <details class="recon-details">
                     <summary class="recon-summary">
@@ -2478,8 +2483,8 @@ eyJoaXN0b3J5IjpbLTE4NTE1NDQ4MTldfQ==
             </div>
             
             <script>
-                // Add copy buttons to all list items after Markdown rendering (English)
-                document.querySelectorAll('#brief-en li').forEach(li => {
+                // Add copy buttons ONLY to Commander Output list items
+                document.querySelectorAll('.commander-output li').forEach(li => {
                     const btn = document.createElement('button');
                     btn.className = 'copy-btn';
                     btn.innerText = 'COPY';
@@ -2494,7 +2499,7 @@ eyJoaXN0b3J5IjpbLTE4NTE1NDQ4MTldfQ==
         </main>
 
         <footer>
-            <p>GENERATED BY MEDOAS PIPELINE v2.0 // 2026-02-09 04:01:10 UTC</p>
+            <p>GENERATED BY MEDOAS PIPELINE v2.0 // 2026-02-09 04:05:46 UTC</p>
             <p style="margin-top: 10px; font-size: 0.7rem; color: #444;">OBJECTIVE ANALYSIS. NO SPECULATION. NO BIAS.</p>
         </footer>
     </div>

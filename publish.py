@@ -490,15 +490,16 @@ def generate_html():
 
         .intel-content li {{
             margin-bottom: 12px;
-            padding-left: 25px !important;
+            padding-left: 0 !important; /* Remove bullet space for tagged items */
             position: relative;
             font-size: 0.95rem;
         }}
 
-        .intel-content li::before {{
+        /* Apply bullets only to nested lists or untagged items */
+        .intel-content li:not(:has(.intel-label))::before {{
             content: "•";
             position: absolute;
-            left: 5px;
+            left: -15px;
             color: var(--accent);
             font-weight: bold;
         }}
@@ -791,7 +792,9 @@ def generate_html():
 
         <main>
             <div class="brief-content active" id="brief-en">
-                {brief_html_en if brief_html_en else '<div class="empty-state">No executive intelligence generated for today yet. Waiting for end-of-day synthesis...</div>'}
+                <div class="commander-output">
+                    {brief_html_en if brief_html_en else '<div class="empty-state">No executive intelligence generated for today yet. Waiting for end-of-day synthesis...</div>'}
+                </div>
                 
                 <details class="recon-details">
                     <summary class="recon-summary">
@@ -804,7 +807,9 @@ def generate_html():
             </div>
             
             <div class="brief-content ar-font" id="brief-ar">
-                {brief_html_ar if brief_html_ar else '<div class="empty-state">جارٍ إعداد الترجمة... (Translation pending)</div>'}
+                <div class="commander-output">
+                    {brief_html_ar if brief_html_ar else '<div class="empty-state">جارٍ إعداد الترجمة... (Translation pending)</div>'}
+                </div>
                 
                 <details class="recon-details">
                     <summary class="recon-summary">
@@ -817,8 +822,8 @@ def generate_html():
             </div>
             
             <script>
-                // Add copy buttons to all list items after Markdown rendering (English)
-                document.querySelectorAll('#brief-en li').forEach(li => {{
+                // Add copy buttons ONLY to Commander Output list items
+                document.querySelectorAll('.commander-output li').forEach(li => {{
                     const btn = document.createElement('button');
                     btn.className = 'copy-btn';
                     btn.innerText = 'COPY';
