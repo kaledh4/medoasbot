@@ -144,7 +144,7 @@ def generate_html():
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             line-height: 1.7;
-            overflow-x: hidden;
+            overflow-x: auto;
         }}
         
         .ar-font {{
@@ -421,7 +421,7 @@ def generate_html():
             margin-top: 30px;
         }}
 
-        .intel-pulse {{
+         .intel-pulse {{
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 242, 255, 0.08);
@@ -430,6 +430,9 @@ def generate_html():
             border-radius: 12px;
             position: relative;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            min-width: 0;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }}
 
         .intel-pulse:hover {{
@@ -476,6 +479,9 @@ def generate_html():
             line-height: 1.8;
             font-size: 1rem;
             color: rgba(255, 255, 255, 0.85);
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
         }}
 
         .intel-content p {{
